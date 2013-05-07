@@ -66,14 +66,15 @@
         .on('scroll.fndtn.magellan', function() {
           var windowScrollTop = $(window).scrollTop();
           self.fixed_magellan.each(function() {
-            var $expedition = $(this);
+            var $expedition = $(this),
+                use_fixed_position = $expedition.data('magellan-expedition') === 'fixed';
             if (typeof $expedition.data('magellan-top-offset') === 'undefined') {
               $expedition.data('magellan-top-offset', $expedition.offset().top);
             }
             if (typeof $expedition.data('magellan-fixed-position') === 'undefined') {
               $expedition.data('magellan-fixed-position', false)
             }
-            var fixed_position = (windowScrollTop + self.settings.threshold) > $expedition.data("magellan-top-offset");
+            var fixed_position = (windowScrollTop + self.settings.threshold) > $expedition.data("magellan-top-offset") && use_fixed_position;
             var attr = $expedition.attr('data-magellan-top-offset');
 
             if ($expedition.data("magellan-fixed-position") != fixed_position) {
